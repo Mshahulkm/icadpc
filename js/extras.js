@@ -148,8 +148,8 @@
        • Voters must have a (free) GitHub account.
   ====================================================== */
   const POLL_CONFIG = {
-    owner: 'YOUR_GITHUB_USERNAME',   // e.g. 'shahul'
-    repo:  'YOUR_REPO_NAME',         // e.g. 'icad-fifa-2026'
+    owner: 'Mshahulkm',   // e.g. 'shahul'
+    repo:  'icadpc',         // e.g. 'icad-fifa-2026'
     labelPrefix: 'vote:',            // labels look like "vote:Brazil"
     issueTitlePrefix: '[VOTE] ',     // pre-filled issue title
     cacheMs: 30 * 1000,              // client cache to respect rate limit
