@@ -161,7 +161,7 @@
 
   function isConfigured() {
     return POLL_CONFIG.owner && POLL_CONFIG.repo &&
-           POLL_CONFIG.owner !== 'YOUR_GITHUB_USERNAME';
+           POLL_CONFIG.owner !== 'Mshahulkm';
   }
 
   function getUserVote()  { return localStorage.getItem(POLL_USER_KEY) || ''; }
