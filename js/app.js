@@ -16,10 +16,24 @@ const annList = document.getElementById('annList');
 const wg = document.getElementById('winnersGrid');
 const lbBody = document.getElementById('lbBody');
 
-const LEADERBOARD = Array.from({length:10},()=>({name:"Coming Soon", points:"--"}));
+const LEADERBOARD = [
+  { rank: 1, name: "Shahul", points: 95 },
+  { rank: 2, name: "Suhail", points: 90 },
+  { rank: 3, name: "Amith", points: 88 }
+];
+
 lbBody.innerHTML = LEADERBOARD.map((p,i)=>{
-  const cls = i===0?'gold':i===1?'silver':i===2?'bronze':'';
-  return `<tr><td><span class="rank-badge ${cls}">${i+1}</span></td><td>${p.name}</td><td class="text-end fw-bold text-gold">${p.points}</td></tr>`;
+  const cls = p.rank===1 ? 'gold' :
+              p.rank===2 ? 'silver' :
+              p.rank===3 ? 'bronze' : '';
+
+  return `
+    <tr>
+      <td><span class="rank-badge ${cls}">${p.rank}</span></td>
+      <td>${p.name}</td>
+      <td class="text-end fw-bold text-gold">${p.points}</td>
+    </tr>
+  `;
 }).join('');
 
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
