@@ -1,108 +1,300 @@
-(function () {
-  const stadium = document.getElementById('stadium');
-  const football = document.getElementById('football');
-  const hero = document.getElementById('hero');
-  const goalPost = document.getElementById('goalPost');
-  const flash = document.getElementById('flash');
-  const confetti = document.getElementById('confetti');
-  const goalText = document.getElementById('goalText');
-  const reveal = document.getElementById('reveal');
-  const video = document.getElementById('revealVideo');
-  const replay = document.getElementById('replay');
+:root {
+  --stadium-deep: #0b1428;
+  --stadium-mid: #16223f;
+  --field-green: #2f8a4a;
+  --field-green-dark: #1d5e30;
+  --gold: #f0c14b;
+  --gold-hot: #ffd86b;
+  --ink: #f7f9ff;
+  --gradient-sky: radial-gradient(120% 80% at 50% 0%, #2a3a72 0%, #0b1428 55%, #04070f 100%);
+  --gradient-field: linear-gradient(180deg, var(--field-green) 0%, var(--field-green-dark) 100%);
+  --gradient-gold: linear-gradient(135deg, var(--gold-hot), var(--gold));
+}
 
-  let audioCtx = null;
-  let busy = false;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  overflow: hidden;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--stadium-deep);
+  color: var(--ink);
+}
 
-  function getCtx() {
-    if (!audioCtx) {
-      const Ctx = window.AudioContext || window.webkitAudioContext;
-      if (Ctx) audioCtx = new Ctx();
-    }
-    return audioCtx;
-  }
+.stadium-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--gradient-sky);
+  isolation: isolate;
+}
 
-  function playKick() {
-    const ctx = getCtx(); if (!ctx) return;
-    const o = ctx.createOscillator(); const g = ctx.createGain();
-    o.type = 'triangle';
-    o.frequency.setValueAtTime(180, ctx.currentTime);
-    o.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.15);
-    g.gain.setValueAtTime(0.4, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
-    o.connect(g).connect(ctx.destination);
-    o.start(); o.stop(ctx.currentTime + 0.2);
-  }
+.stadium-sky {
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 40% at 50% 10%, rgba(130, 100, 255, 0.35), transparent 70%);
+  pointer-events: none;
+}
 
-  function playHorn() {
-    const ctx = getCtx(); if (!ctx) return;
-    const o = ctx.createOscillator(); const g = ctx.createGain();
-    o.type = 'sawtooth';
-    o.frequency.setValueAtTime(220, ctx.currentTime);
-    g.gain.setValueAtTime(0.25, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
-    o.connect(g).connect(ctx.destination);
-    o.start(); o.stop(ctx.currentTime + 1.2);
-  }
+.stadium-stands {
+  position: absolute; left: 0; right: 0; bottom: 38%;
+  height: 26%;
+  background: linear-gradient(180deg, #1a2240 0%, #0a0f22 100%);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+.crowd-dots {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 10% 30%, rgba(240,193,75,0.5) 1px, transparent 2px),
+    radial-gradient(circle at 25% 60%, rgba(220,80,80,0.5) 1px, transparent 2px),
+    radial-gradient(circle at 40% 20%, rgba(100,200,240,0.5) 1px, transparent 2px),
+    radial-gradient(circle at 55% 70%, rgba(240,200,90,0.5) 1px, transparent 2px),
+    radial-gradient(circle at 70% 35%, rgba(220,100,80,0.5) 1px, transparent 2px),
+    radial-gradient(circle at 85% 60%, rgba(100,200,240,0.5) 1px, transparent 2px),
+    radial-gradient(circle at 95% 25%, rgba(240,200,90,0.5) 1px, transparent 2px);
+  background-size: 60px 60px;
+  animation: crowd-sway 4s ease-in-out infinite;
+  opacity: 0.85;
+}
+@keyframes crowd-sway { 0%,100% { transform: translateY(0);} 50% { transform: translateY(2px);} }
 
-  function spawnConfetti() {
-    const colors = ['#f0c14b', '#7fdbff', '#ffffff', '#3ddc84', '#ff4d6d'];
-    confetti.innerHTML = '';
-    for (let i = 0; i < 70; i++) {
-      const p = document.createElement('span');
-      p.className = 'confetti-piece';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.background = colors[i % colors.length];
-      p.style.animationDelay = (Math.random() * 0.6) + 's';
-      p.style.animationDuration = (1.6 + Math.random() * 1.8) + 's';
-      p.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
-      confetti.appendChild(p);
-    }
-  }
+.stadium-lights {
+  position: absolute; top: 0; left: 0; right: 0; height: 0;
+  display: flex; justify-content: space-around;
+  pointer-events: none;
+}
+.stadium-lights span {
+  display: block;
+  width: 40vw; height: 70vh; margin-top: -10vh;
+  background: radial-gradient(ellipse at top, rgba(255,255,255,0.18) 0%, transparent 60%);
+  filter: blur(8px);
+  animation: light-pulse 6s ease-in-out infinite;
+}
+.stadium-lights span:nth-child(2) { animation-delay: 1.5s; }
+.stadium-lights span:nth-child(3) { animation-delay: 3s; }
+.stadium-lights span:nth-child(4) { animation-delay: 4.5s; }
+@keyframes light-pulse { 0%,100% { opacity: 0.7;} 50% { opacity: 1;} }
 
-  function kick() {
-    if (busy) return;
-    busy = true;
-    playKick();
-    hero.classList.add('is-hidden');
-    football.classList.add('is-kicking');
-    football.disabled = true;
+.stadium-field {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 38%;
+  background: var(--gradient-field);
+  transform: perspective(800px) rotateX(45deg);
+  transform-origin: top center;
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+}
+.field-lines {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0) 0 80px, rgba(255,255,255,0.06) 80px 160px),
+    linear-gradient(180deg, transparent 0%, transparent 40%, rgba(255,255,255,0.15) 40%, rgba(255,255,255,0.15) 41%, transparent 41%);
+}
 
-    setTimeout(() => {
-      football.classList.add('is-done');
-      goalPost.classList.add('is-scored');
-      stadium.classList.add('is-shake');
-      flash.classList.add('is-flash');
-      goalText.hidden = false;
-      spawnConfetti();
-      playHorn();
-      setTimeout(() => stadium.classList.remove('is-shake'), 500);
-      setTimeout(() => flash.classList.remove('is-flash'), 600);
-    }, 900);
+.goal-post {
+  position: absolute; left: 50%; bottom: 32%;
+  transform: translateX(-50%);
+  width: min(420px, 70vw);
+  height: min(220px, 30vh);
+  z-index: 3;
+}
+.goal-frame {
+  position: absolute; inset: 0;
+  border: 6px solid #f7f9ff;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 0 30px rgba(255,255,255,0.25);
+}
+.goal-net {
+  position: absolute; inset: 6px 6px 0 6px;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.25) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.25) 0 1px, transparent 1px 14px);
+  background-color: rgba(10,15,40,0.4);
+  transform-origin: top center;
+}
+.goal-post.is-scored .goal-net { animation: net-shake 0.6s ease-out; }
+@keyframes net-shake {
+  0% { transform: scaleY(1);}
+  30% { transform: scaleY(1.08) translateY(4px);}
+  60% { transform: scaleY(0.97) translateY(-2px);}
+  100% { transform: scaleY(1);}
+}
 
-    setTimeout(() => {
-      reveal.classList.add('is-open');
-      if (video) {
-        const p = video.play();
-        if (p && p.catch) p.catch(() => {});
-      }
-    }, 2400);
-  }
+.football-btn {
+  position: absolute; left: 50%; bottom: 8%;
+  transform: translateX(-50%);
+  background: transparent; border: 0; padding: 0;
+  cursor: pointer; z-index: 5;
+  width: clamp(70px, 12vw, 110px);
+  height: clamp(70px, 12vw, 110px);
+  transition: transform 0.2s ease;
+}
+.football-btn:hover:not(:disabled) { transform: translateX(-50%) translateY(-6px) scale(1.05); }
+.football-btn:active:not(:disabled) { transform: translateX(-50%) scale(0.95); }
+.football-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 6px; border-radius: 50%; }
 
-  function reset() {
-    busy = false;
-    football.classList.remove('is-kicking', 'is-done');
-    football.disabled = false;
-    hero.classList.remove('is-hidden');
-    goalPost.classList.remove('is-scored');
-    goalText.hidden = true;
-    confetti.innerHTML = '';
-    reveal.classList.remove('is-open');
-    if (video) { video.pause(); video.currentTime = 0; }
-  }
+.football {
+  position: relative; width: 100%; height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0%, #e8e8e8 60%, #b5b5b5 100%);
+  box-shadow: inset -8px -10px 20px rgba(0,0,0,0.35), 0 18px 30px -10px rgba(0,0,0,0.55);
+  overflow: hidden;
+}
+.football-pattern {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, #1a1a2e 12%, transparent 13%),
+    radial-gradient(circle at 15% 35%, #1a1a2e 8%, transparent 9%),
+    radial-gradient(circle at 85% 35%, #1a1a2e 8%, transparent 9%),
+    radial-gradient(circle at 30% 80%, #1a1a2e 7%, transparent 8%),
+    radial-gradient(circle at 75% 80%, #1a1a2e 7%, transparent 8%);
+}
+.football-shadow {
+  position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
+  width: 80%; height: 10px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.5), transparent 70%);
+  filter: blur(3px);
+}
 
-  football.addEventListener('click', kick);
-  football.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); kick(); }
-  });
-  replay.addEventListener('click', reset);
-})();
+.football-btn.is-kicking { animation: ball-kick 0.9s cubic-bezier(0.4,0,0.2,1) forwards; }
+.football-btn.is-kicking .football { animation: ball-spin 0.9s linear forwards; }
+.football-btn.is-kicking .football-shadow { animation: shadow-fade 0.9s ease-out forwards; }
+@keyframes ball-kick {
+  0%   { transform: translateX(-50%) translateY(0) scale(1); }
+  60%  { transform: translateX(-50%) translateY(-45vh) scale(0.55); filter: blur(1.5px);}
+  100% { transform: translateX(-50%) translateY(-58vh) scale(0.35); filter: blur(0);}
+}
+@keyframes ball-spin { to { transform: rotate(1080deg);} }
+@keyframes shadow-fade { to { opacity: 0; transform: translateX(-50%) scale(0.3);} }
+.football-btn.is-done { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-58vh) scale(0.35);}
+
+.stadium-root.is-shake .stadium-field,
+.stadium-root.is-shake .stadium-stands,
+.stadium-root.is-shake .goal-post { animation: shake 0.4s ease-out; }
+@keyframes shake {
+  0%,100% { translate: 0 0;}
+  20% { translate: -4px 2px;}
+  40% { translate: 4px -2px;}
+  60% { translate: -3px 1px;}
+  80% { translate: 3px -1px;}
+}
+
+.flash-overlay {
+  position: absolute; inset: 0; background: #fff;
+  opacity: 0; pointer-events: none; z-index: 6;
+}
+.flash-overlay.is-flash { animation: flash 0.5s ease-out;}
+@keyframes flash { 0% { opacity: 0;} 20% { opacity: 0.85;} 100% { opacity: 0;} }
+
+.confetti-layer { position: absolute; inset: 0; pointer-events: none; z-index: 7; overflow: hidden; }
+.confetti-piece {
+  position: absolute; top: -20px;
+  width: 10px; height: 16px;
+  border-radius: 2px;
+  animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-20px) rotate(0); opacity: 1;}
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.9;}
+}
+
+.hero-text {
+  position: absolute; top: 10%; left: 50%;
+  transform: translateX(-50%);
+  text-align: center; z-index: 4;
+  width: min(900px, 90vw);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.hero-text.is-hidden { opacity: 0; transform: translateX(-50%) translateY(-20px);}
+.hero-text .kicker {
+  letter-spacing: 0.35em; text-transform: uppercase;
+  font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+  color: var(--gold); margin-bottom: 0.75rem; font-weight: 600;
+}
+.hero-text h1 {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 900; line-height: 1; letter-spacing: -0.02em;
+  text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+}
+.hero-text h1 span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero-text .cta-text {
+  margin-top: 1rem;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  color: rgba(247,249,255,0.85);
+  letter-spacing: 0.05em;
+}
+
+.goal-text-wrap {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 8; pointer-events: none;
+}
+.goal-text {
+  font-size: clamp(5rem, 18vw, 14rem);
+  font-weight: 900; letter-spacing: -0.04em;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 60px rgba(240,193,75,0.5);
+  animation: goal-pop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes goal-pop {
+  0% { transform: scale(0.2) rotate(-8deg); opacity: 0;}
+  40% { transform: scale(1.15) rotate(2deg); opacity: 1;}
+  70% { transform: scale(1) rotate(0); opacity: 1;}
+  100% { transform: scale(1.05); opacity: 0.95;}
+}
+
+.reveal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(5,10,25,0.92);
+  backdrop-filter: blur(20px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 20;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.8s ease;
+  padding: 1.25rem;
+}
+.reveal-overlay.is-open { opacity: 1; pointer-events: auto; }
+.reveal-inner {
+  width: min(1000px, 100%);
+  display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+  animation: reveal-rise 0.9s 0.2s cubic-bezier(0.2,0.8,0.2,1) backwards;
+}
+@keyframes reveal-rise {
+  from { opacity: 0; transform: translateY(40px) scale(0.96);}
+  to { opacity: 1; transform: none;}
+}
+.reveal-kicker {
+  letter-spacing: 0.4em; text-transform: uppercase;
+  font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+  color: var(--gold); font-weight: 700;
+}
+.reveal-video {
+  width: 100%; max-height: 75vh;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(240,193,75,0.3);
+  background: #000;
+}
+.replay-btn {
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(240,193,75,0.5);
+  background: transparent; color: var(--gold-hot);
+  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  font-size: 0.85rem; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.replay-btn:hover {
+  background: var(--gradient-gold);
+  color: #16223f; border-color: transparent;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .goal-post { bottom: 30%; height: 22vh; }
+  .hero-text { top: 6%; }
+}

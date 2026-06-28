@@ -1,50 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ICAD FIFA Prediction Contest – Champions Reveal</title>
-  <meta name="description" content="Score a goal to reveal the ICAD FIFA Prediction Contest group stage champions in a cinematic stadium experience." />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main class="stadium-root" id="stadium">
-    <div class="stadium-sky"></div>
-    <div class="stadium-stands"><div class="crowd-dots"></div></div>
-    <div class="stadium-lights"><span></span><span></span><span></span><span></span></div>
-    <div class="stadium-field"><div class="field-lines"></div></div>
+# ICAD FIFA Prediction Contest – Champions Reveal
 
-    <div class="goal-post" id="goalPost">
-      <div class="goal-frame"><div class="goal-net"></div></div>
-    </div>
+A standalone, cinematic, FIFA-inspired website that reveals the group stage champions of the ICAD FIFA Prediction Contest. Click the football to score a goal — confetti, stadium flash, and a champion reveal video play automatically.
 
-    <div class="flash-overlay" id="flash"></div>
-    <div class="confetti-layer" id="confetti"></div>
+## Stack
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- No backend, no build step, no dependencies
 
-    <header class="hero-text" id="hero">
-      <p class="kicker">FIFA Prediction Contest</p>
-      <h1>ICAD FIFA<br/><span>Champions Reveal</span></h1>
-      <p class="cta-text">Score a goal to reveal the champions</p>
-    </header>
+## File structure
+```
+/
+├── index.html
+├── style.css
+├── script.js
+├── README.md
+└── assets/
+    └── reveal-video.mp4
+```
 
-    <div class="goal-text-wrap" id="goalText" hidden>
-      <h2 class="goal-text">GOAL!</h2>
-    </div>
+## Run locally
+Just open `index.html` in a browser. For full autoplay/audio support, serve it with a tiny static server:
 
-    <button type="button" id="football" class="football-btn" aria-label="Kick the football to reveal the champions">
-      <div class="football"><div class="football-pattern"></div></div>
-      <div class="football-shadow"></div>
-    </button>
+```bash
+# Python 3
+python3 -m http.server 8080
+# then open http://localhost:8080
+```
 
-    <div class="reveal-overlay" id="reveal">
-      <div class="reveal-inner">
-        <p class="reveal-kicker">Group Stage Champions</p>
-        <video id="revealVideo" src="assets/reveal-video.mp4" controls playsinline class="reveal-video"></video>
-        <button type="button" id="replay" class="replay-btn">Replay the goal</button>
-      </div>
-    </div>
-  </main>
+## Deploy
+Upload the entire folder to any static host: GitHub Pages, Netlify, Vercel, Cloudflare Pages, or any web server.
 
-  <script src="script.js"></script>
-</body>
-</html>
+### GitHub Pages
+1. Create a new GitHub repository.
+2. Upload all files (including the `assets/` folder).
+3. In repo Settings → Pages, set source to `main` branch, root.
+4. Your site will be live at `https://<user>.github.io/<repo>/`.
+
+## Customization
+- Replace `assets/reveal-video.mp4` with your own champions reveal video.
+- Edit the headline and CTA copy in `index.html`.
+- Tweak colors in `:root` inside `style.css`.
