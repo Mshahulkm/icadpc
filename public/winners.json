@@ -1,0 +1,45 @@
+{
+  "champion": {
+    "name": "Ahmed Ali",
+    "department": "Engineering",
+    "points": 248,
+    "accuracy": 92
+  },
+  "runnerup": {
+    "name": "Muhammed Shahul",
+    "department": "Operations",
+    "points": 231,
+    "accuracy": 87
+  },
+  "third": {
+    "name": "Abdullah",
+    "department": "Design",
+    "points": 219,
+    "accuracy": 83
+  },
+  "topScorer": {
+    "name": "Faisal",
+    "department": "Marketing",
+    "points": 205,
+    "accuracy": 79
+  },
+  "bestPredictor": {
+    "name": "Yusuf",
+    "department": "Finance",
+    "points": 198,
+    "accuracy": 77
+  },
+  "luckyDraw": {
+    "name": "Rashid",
+    "department": "HR",
+    "points": 150,
+    "accuracy": 65
+  },
+  "stats": {
+    "participants": 512,
+    "countries": 32,
+    "matches": 64,
+    "avgAccuracy": 71,
+    "highest": 248
+  }
+}
