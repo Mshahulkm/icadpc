@@ -1,6 +1,0 @@
-{
-  "champion": { "name": "Suhail TK", "department": "Finance", "points": 298, "accuracy": 94 },
-  "runnerup": { "name": "Irshad MP", "department": "Operations", "points": 281, "accuracy": 89 },
-  "third": { "name": "Abdullah", "department": "IT", "points": 264, "accuracy": 84 },
-  "topScorer": { "name": "Faisal", "department": "Sales", "points": 251, "accuracy": 81 }
-}
