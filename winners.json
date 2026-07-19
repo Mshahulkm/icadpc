@@ -1,0 +1,17 @@
+{
+  "champion":  { "name": "Suhail TK",  "department": "Jeddah",    "points": 298, "accuracy": 94, "image": "assets/winner-champion.jpg" },
+  "runnerup":  { "name": "Irshad MP",  "department": "Riyadh", "points": 281, "accuracy": 89, "image": "assets/winner-runnerup.jpg" },
+  "third":     { "name": "Abdullah",   "department": "Jeddah",         "points": 264, "accuracy": 84, "image": "assets/winner-third.jpg" },
+  "topScorer": { "name": "Faisal",     "department": "Jeddah",      "points": 251, "accuracy": 81, "image": "assets/winner-topscorer.jpg" },
+
+  "trophy":  "assets/trophy.jpg",
+  "stadium": "assets/stadium.jpg",
+
+  "moments": [
+    "moment-images/stadium.jpg",
+    "moment-images/champion.jpg",
+    "moment-images/runnerup.jpg",
+    "moment-images/third.jpg",
+    "moment-images/topScorer.jpg"
+  ]
+}
