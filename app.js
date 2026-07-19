@@ -261,7 +261,7 @@
 
   function statsStage(){
     const items=[
-      {l:'Participants',v:1284},{l:'Countries',v:32},{l:'Matches Predicted',v:64},
+      {l:'Participants',v:99},{l:'Stages',v:06},{l:'Matches Predicted',v:64},
       {l:'Avg. Accuracy',v:76,x:'%'},{l:'Highest Score',v:298}];
     const s = h('section',{class:'section',style:'background:var(--bg)'});
     s.appendChild(h('h2',{class:'title gold-shine',style:'margin-bottom:2.5rem'},'Tournament Stats'));
