@@ -1,0 +1,17 @@
+{
+  "champion":  { "name": "Fasal Rahman", "department": "Riyadh", "points": 298, "accuracy": 94, "image": "assets/winner-champion.jpg" },
+  "runnerup":  { "name": "Sujith",       "department": "Jeddah", "points": 281, "accuracy": 89, "image": "assets/winner-runnerup.jpg" },
+  "third":     { "name": "Suhail TK",    "department": "Jeddah", "points": 264, "accuracy": 84, "image": "assets/winner-third.jpg" },
+  "topScorer": { "name": "Irshad",       "department": "Riyadh", "points": 251, "accuracy": 81, "image": "assets/winner-topscorer.jpg" },
+  "fifth":     { "name": "Sijith",       "department": "Jeddah", "points": 251, "accuracy": 81, "image": "assets/winner-fifth.jpg" },
+  "trophy":  "assets/trophy.jpg",
+  "stadium": "assets/stadium.jpg",
+
+  "moments": [
+    "moment-images/stadium.jpg",
+    "moment-images/champion.jpg",
+    "moment-images/runnerup.jpg",
+    "moment-images/third.jpg",
+    "moment-images/topScorer.jpg"
+  ]
+}
