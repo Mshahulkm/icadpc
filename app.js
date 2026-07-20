@@ -86,7 +86,7 @@
       h('div',{class:'pc-top'},
         h('div',{class:'display',style:'font-size:2.6rem'},String(d.points)),
         h('div',{style:'text-align:right'},
-          h('div',{class:'display',style:'font-size:1.5rem'},'ICAD PREDICTION CONTEST'),
+          h('div',{class:'display',style:'font-size:1.5rem'},'ICAD CONTEST'),
           h('div',{style:'font-size:.7rem;text-transform:uppercase;letter-spacing:.15em'},d.department))
       ),
       h('div',{class:'pc-img'}, h('img',{src:imgSrc,alt:d.name,loading:'lazy'})),
