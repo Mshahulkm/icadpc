@@ -28,6 +28,7 @@
       runnerup:  winners.runnerup  && winners.runnerup.image,
       third:     winners.third     && winners.third.image,
       topScorer: winners.topScorer && winners.topScorer.image,
+      fifth: winners.fifth && winners.fifth.image,
       trophy:    winners.trophy    || 'assets/trophy.jpg',
       stadium:   winners.stadium   || 'assets/stadium.jpg'
     };
