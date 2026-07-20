@@ -375,7 +375,7 @@
   function statsStage(){
     const items=[
       {l:'Participants',v:99},{l:'Stages',v:6},{l:'Matches Predicted',v:64},
-      {l:'Avg. Accuracy',v:76,x:'%'},{l:'Highest Score',v:298}];
+      {l:'Avg. Accuracy',v:76,x:'%'},{l:'Highest Score',v:503.5}];
     const s = h('section',{class:'section',style:'background:var(--bg)'});
     s.appendChild(h('h2',{class:'title gold-shine',style:'margin-bottom:2.5rem'},'Prediction Contest Stats'));
     const grid = h('div',{class:'grid grid-3'});
