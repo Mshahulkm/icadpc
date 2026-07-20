@@ -3,7 +3,7 @@
   "runnerup":  { "name": "Sujith",  "department": "Jeddah", "points": 281, "accuracy": 89, "image": "assets/winner-runnerup.jpg" },
   "third":     { "name": "Suhail TK",   "department": "Jeddah",         "points": 264, "accuracy": 84, "image": "assets/winner-third.jpg" },
   "Fourth": { "name": "Irshad",     "department": "Riyadh",      "points": 251, "accuracy": 81, "image": "assets/winner-topscorer.jpg" },
-"Fifth": { "name": "Sijith",     "department": "Jeddah",      "points": 251, "accuracy": 81, "image": "assets/winner-fifth.jpg" },
+"fifth": { "name": "Sijith",     "department": "Jeddah",      "points": 251, "accuracy": 81, "image": "assets/winner-fifth.jpg" },
   "trophy":  "assets/trophy.jpg",
   "stadium": "assets/stadium.jpg",
 
